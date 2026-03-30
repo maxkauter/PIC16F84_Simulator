@@ -20,6 +20,21 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Title = "Datei auswählen";
+                openFileDialog.Filter = "Alle Dateien (*.*)|*.*";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string dateipfad = openFileDialog.FileName;
+                    MessageBox.Show("Ausgewählte Datei: " + dateipfad, "Datei ausgewählt");
+                }
+            }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
 
         }
     }
