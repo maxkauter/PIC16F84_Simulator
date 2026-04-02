@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Drawing.Text;
 using WindowsFormsApp1.Properties;
 
+
 namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
@@ -73,17 +74,28 @@ namespace WindowsFormsApp1
                 if (string.IsNullOrWhiteSpace(zeile))
                     continue;
 
-                Match match = Regex.Match(zeile, @"^\s*([0-9A-Fa-f]{4})\s+([0-9A-Fa-f]{4})");
+                Match match = Regex.Match(
+                    zeile,
+                    @"^\s*([0-9A-Fa-f]{4})\s+([0-9A-Fa-f]{4})\s+\d+\s+(.*)$");
+
+                if (!match.Success)
+                {
+                    match = Regex.Match(
+                        zeile,
+                        @"^\s*([0-9A-Fa-f]{4})\s+([0-9A-Fa-f]{4})\s+(.*)$");
+                }
 
                 if (match.Success)
                 {
                     int adresse = Convert.ToInt32(match.Groups[1].Value, 16);
                     string opcode = match.Groups[2].Value.ToUpper();
+                    string assemblerText = match.Groups[3].Value.Trim();
 
                     liste.Add(new LstEintrag
                     {
                         Adresse = adresse,
-                        Program = opcode
+                        Opcode = opcode,
+                        AssemblerText = assemblerText
                     });
                 }
             }
@@ -144,9 +156,12 @@ namespace WindowsFormsApp1
     public class LstEintrag
     {
         public int Adresse { get; set; }
-        public string Program { get; set; }
+        public string Opcode { get; set; }
+        public string AssemblerText { get; set; }
 
         public string Programcounter => Adresse.ToString("X4");
+
+        public string Program => $"{Opcode}   {AssemblerText}";
     }
 
 }

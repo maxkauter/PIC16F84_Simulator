@@ -46,6 +46,7 @@
             this.PORTA = new System.Windows.Forms.GroupBox();
             this.STATUS_REGISTER = new System.Windows.Forms.GroupBox();
             this.SPECIAL_REGISTER = new System.Windows.Forms.GroupBox();
+            this.Stack = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
@@ -63,7 +64,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(720, 175);
+            this.button2.Location = new System.Drawing.Point(722, 239);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(95, 20);
             this.button2.TabIndex = 1;
@@ -72,7 +73,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(720, 201);
+            this.button3.Location = new System.Drawing.Point(720, 265);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(95, 20);
             this.button3.TabIndex = 2;
@@ -81,7 +82,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(720, 227);
+            this.button4.Location = new System.Drawing.Point(720, 291);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(95, 20);
             this.button4.TabIndex = 3;
@@ -90,7 +91,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(720, 253);
+            this.button5.Location = new System.Drawing.Point(720, 317);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(95, 19);
             this.button5.TabIndex = 4;
@@ -127,7 +128,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(721, 139);
+            this.label1.Location = new System.Drawing.Point(721, 208);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(44, 13);
             this.label1.TabIndex = 8;
@@ -141,7 +142,7 @@
             this.Program});
             this.dataGridView1.Location = new System.Drawing.Point(12, 40);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(223, 379);
+            this.dataGridView1.Size = new System.Drawing.Size(223, 453);
             this.dataGridView1.TabIndex = 9;
             // 
             // Programcounter
@@ -158,7 +159,7 @@
             // dataGridView2
             // 
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Location = new System.Drawing.Point(271, 331);
+            this.dataGridView2.Location = new System.Drawing.Point(262, 365);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.Size = new System.Drawing.Size(253, 114);
             this.dataGridView2.TabIndex = 10;
@@ -167,14 +168,14 @@
             // dataGridView3
             // 
             this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Location = new System.Drawing.Point(562, 331);
+            this.dataGridView3.Location = new System.Drawing.Point(562, 365);
             this.dataGridView3.Name = "dataGridView3";
             this.dataGridView3.Size = new System.Drawing.Size(253, 111);
             this.dataGridView3.TabIndex = 11;
             // 
             // PORTB
             // 
-            this.PORTB.Location = new System.Drawing.Point(427, 253);
+            this.PORTB.Location = new System.Drawing.Point(427, 278);
             this.PORTB.Name = "PORTB";
             this.PORTB.Size = new System.Drawing.Size(287, 58);
             this.PORTB.TabIndex = 12;
@@ -183,7 +184,7 @@
             // 
             // PORTA
             // 
-            this.PORTA.Location = new System.Drawing.Point(427, 178);
+            this.PORTA.Location = new System.Drawing.Point(427, 217);
             this.PORTA.Name = "PORTA";
             this.PORTA.Size = new System.Drawing.Size(287, 55);
             this.PORTA.TabIndex = 13;
@@ -192,7 +193,7 @@
             // 
             // STATUS_REGISTER
             // 
-            this.STATUS_REGISTER.Location = new System.Drawing.Point(427, 120);
+            this.STATUS_REGISTER.Location = new System.Drawing.Point(427, 156);
             this.STATUS_REGISTER.Name = "STATUS_REGISTER";
             this.STATUS_REGISTER.Size = new System.Drawing.Size(287, 55);
             this.STATUS_REGISTER.TabIndex = 14;
@@ -208,11 +209,21 @@
             this.SPECIAL_REGISTER.TabStop = false;
             this.SPECIAL_REGISTER.Text = "Special Register";
             // 
+            // Stack
+            // 
+            this.Stack.Location = new System.Drawing.Point(252, 245);
+            this.Stack.Name = "Stack";
+            this.Stack.Size = new System.Drawing.Size(158, 103);
+            this.Stack.TabIndex = 16;
+            this.Stack.TabStop = false;
+            this.Stack.Text = "Stack";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(835, 457);
+            this.ClientSize = new System.Drawing.Size(835, 505);
+            this.Controls.Add(this.Stack);
             this.Controls.Add(this.SPECIAL_REGISTER);
             this.Controls.Add(this.STATUS_REGISTER);
             this.Controls.Add(this.PORTA);
@@ -261,6 +272,7 @@
         private System.Windows.Forms.GroupBox PORTA;
         private System.Windows.Forms.GroupBox STATUS_REGISTER;
         private System.Windows.Forms.GroupBox SPECIAL_REGISTER;
+        private System.Windows.Forms.GroupBox Stack;
     }
 }
 
