@@ -9,11 +9,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using System.Drawing.Text;
+using WindowsFormsApp1.Properties;
 
 namespace WindowsFormsApp1
 {
     public partial class Form1 : Form
     {
+        /**************************************************/
+
+        //Objekte bzw. Labels für PortB
+        private Label[] portBLabels = new Label[8];
+
+        //Objekte bzw. Labels für PortB
+        private Label[] portALabels = new Label[8];
+
+        //Objekte bzw. Labels für STATUS_REGISTER
+        private Label[] STATUSREGISTERLabels = new Label[8];
+
+        //Objekte bzw. Labels für SPECIAL_REGISTER
+        private Label[] SpecialRegisterLabels = new Label[9];
+
+        private List<LstEintrag> programmBefehle = new List<LstEintrag>();
+        private int aktuellerBefehlIndex = 0;
+        private int programmZaehler = 0;
+
+        /**************************************************/
         public Form1()
         {
             InitializeComponent();
@@ -52,23 +73,26 @@ namespace WindowsFormsApp1
                 if (string.IsNullOrWhiteSpace(zeile))
                     continue;
 
-                Match match = Regex.Match(zeile, @"^\s*([0-9A-Fa-f]+)\s+(.*)$");
+                Match match = Regex.Match(zeile, @"^\s*([0-9A-Fa-f]{4})\s+([0-9A-Fa-f]{4})");
 
                 if (match.Success)
                 {
+                    int adresse = Convert.ToInt32(match.Groups[1].Value, 16);
+                    string opcode = match.Groups[2].Value.ToUpper();
+
                     liste.Add(new LstEintrag
                     {
-                        Programcounter = match.Groups[1].Value,
-                        Program = match.Groups[2].Value.Trim()
+                        Adresse = adresse,
+                        Program = opcode
                     });
                 }
             }
 
             return liste;
         }
-     
 
 
+        /**************************************************/
         private void Form1_Load(object sender, EventArgs e)
         {
             dataGridView1.AutoGenerateColumns = false;
@@ -92,17 +116,37 @@ namespace WindowsFormsApp1
 
             dataGridView1.RowHeadersVisible = false;
             dataGridView1.AllowUserToAddRows = false;
+
+        /**************************************************************/
+            //Hier werden die Ports zur Laufzeit aufgerufen und über die Funktionen definiert
+            GUIFunctions.CreatePortAHorizontal(PORTA, portALabels);
+            GUIFunctions.CreatePortBHorizontal(PORTB, portBLabels);
+            //Hier wird das Status Register aufgerufen und definiert
+            GUIFunctions.CreateStatusRegisterHorizontal(STATUS_REGISTER, STATUSREGISTERLabels);
+            //Special Function Register
+            GUIFunctions.CreateSpecialRegisterVertical(SPECIAL_REGISTER, SpecialRegisterLabels);
+
         }
+
+        /**************************************************************/
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
+
     public class LstEintrag
     {
-        public string Programcounter { get; set; }
+        public int Adresse { get; set; }
         public string Program { get; set; }
+
+        public string Programcounter => Adresse.ToString("X4");
     }
 
 }
