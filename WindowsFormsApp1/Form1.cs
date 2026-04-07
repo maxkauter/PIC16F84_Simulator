@@ -12,7 +12,6 @@ using System.Text.RegularExpressions;
 using System.Drawing.Text;
 using WindowsFormsApp1.Properties;
 
-
 namespace WindowsFormsApp1
 {
     // Form1 erbt von der Klasse Form, die die grundlegende Funktionalität für ein WinForm bereitstellt.
@@ -35,6 +34,7 @@ namespace WindowsFormsApp1
         //Objekte bzw. Labels für SPECIAL_REGISTER
         private Label[] SpecialRegisterLabels = new Label[9];
 
+        //Hier liegt das wirkliche Programm, also dass was aus der LST-Datei eingelesen wird und im Grid angezeigt wird
         private List<LstEintrag> programmBefehle = new List<LstEintrag>();
         private int aktuellerBefehlIndex = 0;
         private int programmZaehler = 0;
@@ -83,14 +83,16 @@ namespace WindowsFormsApp1
             }
         }
 
+        //NOCH UNNÖTIG, ABER HIER WIRD PORTB ANGEZEIGt
         private void AktualisierePortBAnzeige()
         {
             for (int bit = 0; bit < 8; bit++)
             {
                 int value = (portB >> bit) & 1;
-                portBLabels[bit].Text = value.ToString(); // "0" oder "1"
+                portBLabels[bit].Text = value.ToString(); 
             }
         }
+        
 
         private void MarkiereAktuelleZeile()
         {
@@ -282,6 +284,15 @@ namespace WindowsFormsApp1
         public string Program => $"{Opcode}   {AssemblerText}";
     }
 
+    // KLEINES BEISPIEL:
+    /*  var e = new LstEintrag();
+        e.Adresse = 10;                // set wird ausgeführt
+        e.Opcode = "3001";             // set wird ausgeführt
+        e.AssemblerText = "MOVLW 0x01"; // set wird ausgeführt
+
+        Console.WriteLine(e.Programcounter); // get berechnet: "000A"
+        Console.WriteLine(e.Program);        // get berechnet: "3001   MOVLW 0x01"
+    */
 }
 
     
