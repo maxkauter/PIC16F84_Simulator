@@ -71,7 +71,7 @@ namespace WindowsFormsApp1
         }
         public byte Read(byte f)
         {
-            // INDF special handling (indirect)
+            // Schauen, ob es sich um indirekte Adressierung handelt
             if ((f & 0x7F) == INDF)
                 return ReadIndirect();
 
@@ -81,53 +81,50 @@ namespace WindowsFormsApp1
 
         public void Write(byte f, byte value)
         {
-            // INDF special handling (indirect)
-            if ((f & 0x7F) == INDF)
+            // Im Fall einer indirekten Adresse (INDF) wird diese über die FSR (File Select Register) angesprochen, der Wert von FSR gibt die Adresse an, auf die zugegriffen wird
+            if ((f & 0x7F) == INDF) // Maskiert auf 7 Bits, wenn es 0x00 ist, dann ist es indirekt, ansonsten direkt (Bei direkt geht es unten weiter)
             {
                 WriteIndirect(value);
                 return;
             }
 
-            byte addr = ResolveDirectAddress(f);
-            WriteAbs(addr, value);
+            byte addr = ResolveDirectAddress(f); // Auswahl der direkten Adresse unter Berücksichtigung der aktuellen Bank (RP0)
+            WriteAbs(addr, value);              // Hier wird dann die absolute Adresse geschrieben, die bereits die Bank berücksichtigt
         }
 
         // -------- Absolute read/write (already banked address 0x00..0xFF) --------
-        public byte ReadAbs(byte addr)
+        public byte ReadAbs(byte addr) // Hier wird eine absolute Adresse angespprochen die bereits die Bank berücksichtigt (Zwischen 0x00 und 0xFF)
         {
-            addr = ResolveMirrors(addr);
+            addr = ResolveMirrors(addr); // 
 
-            // Unimplemented locations: 0x07 / 0x87 read as 0
-            if (addr == 0x07 || addr == 0x87)
-                return 0x00;
+            //if (addr == 0x07 || addr == 0x87)
+            //return 0x00;
 
-            // GPR mapping:
-            // - Bank0 GPR: 0x0C..0x7F
-            // - Bank1 GPR: 0x8C..0xFF (maps to same GPR RAM)
+            // GPRs sind von 0x0C..0x7F (Bank 0) bzw. 0x8C..0xFF (Bank 1), jedoch spiegeln sich die Bank1 GPRs auf die Bank0 GPRs, deshalb sind sie gleich
             if (IsGpr(addr))
                 return _gpr[GprIndex(addr)];
 
-            // Otherwise SFR slot
+            // Wenn nicht im GPR Bereich, dann ist es ein SFR, also PCL , STATUS, FSR, PORTA, PORTB, PCLATH oder INTCON
             return _sfr[addr];
         }
 
-        public void WriteAbs(byte addr, byte value)
+        public void WriteAbs(byte addr, byte value) //Schreibt an eine absolute Adresse, die bereits die Bank berücksichtigen tut
         {
             addr = ResolveMirrors(addr);
 
-            if (addr == 0x07 || addr == 0x87)
+            if (addr == 0x07 || addr == 0x87) // Hier wird mit logischem oder unbelegte Adressen geprüft und werden ignoriert
                 return; // ignore writes
 
             if (IsGpr(addr))
             {
-                _gpr[GprIndex(addr)] = value;
+                _gpr[GprIndex(addr)] = value; // Wird mit der if Anweisung geprüft ob es im Gpr liegt, wenn ja wird es in das Array geschrieben
                 return;
             }
 
-            _sfr[addr] = value;
+            _sfr[addr] = value;             // Ansonsten ist es ein SFR
         }
 
-        // -------- Indirect addressing via FSR/INDF --------
+        // Indirekte Adressierung wird hier behandelt
         public byte ReadIndirect()
         {
             byte fsr = _sfr[FSR];
@@ -150,7 +147,7 @@ namespace WindowsFormsApp1
             WriteAbs(addr, value);
         }
 
-        // -------- Helpers --------
+        // Hier noch Hilfsfunktionen, die bspw. schauen welche Bank aktiv ist bzw. aktiv sein soll
         private byte ResolveDirectAddress(byte f)
         {
             // f is 7-bit in the instruction
@@ -159,6 +156,7 @@ namespace WindowsFormsApp1
             return ResolveMirrors(addr);
         }
 
+        // Bestimmte Adressen spiegeln sich in beiden Banken, das wird hier überprüft, in dem Fall wenn wir auf 0x80 zugreifen wird auf 0x00 gemappt usw.
         private static byte ResolveMirrors(byte addr)
         {
             switch (addr)
@@ -169,19 +167,20 @@ namespace WindowsFormsApp1
                 case 0x84: return 0x04; // FSR
                 case 0x8A: return 0x0A; // PCLATH
                 case 0x8B: return 0x0B; // INTCON
-                default: return addr;
+                default: return addr;   // Falls es keine Spiegelung gibt, wird die Adresse ganz normal zurückgegeben
             }
         }
 
-        private static bool IsGpr(byte addr)
+        private static bool IsGpr(byte addr) // Welches GPR wird angesprochen
         {
-            // Bank0 GPR
+            // Bei der ersten if Anfrage wird geschaut ob Bank 1 Gpr
             if (addr >= 0x0C && addr <= 0x7F) return true;
-            // Bank1 GPR (shadowed)
+            // Bei der zweiten if Abfrage wird geschaut ob Bank 2 GPR
             if (addr >= 0x8C && addr <= 0xFF) return true;
             return false;
         }
 
+        // Nochmal anschauen
         private static int GprIndex(byte addr)
         {
             // Map bank1 GPR 0x8C..0xFF -> bank0 range 0x0C..0x7F

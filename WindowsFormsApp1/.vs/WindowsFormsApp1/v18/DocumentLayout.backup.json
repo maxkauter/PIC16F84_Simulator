@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\Kauter.M\\OneDrive - MiRO Mineraloelraffinerie Oberrhein GmbH \u0026 Co. KG\\Dokumente\\Simulator_Rechnerarchitekturen\\PIC16F84_Simulator\\WindowsFormsApp1\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{B6C941B3-2790-40BF-87DF-7D640DCB5311}|WindowsFormsApp1.csproj|c:\\users\\kauter.m\\onedrive - miro mineraloelraffinerie oberrhein gmbh \u0026 co. kg\\dokumente\\simulator_rechnerarchitekturen\\pic16f84_simulator\\windowsformsapp1\\registerfile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B6C941B3-2790-40BF-87DF-7D640DCB5311}|WindowsFormsApp1.csproj|solutionrelative:registerfile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B6C941B3-2790-40BF-87DF-7D640DCB5311}|WindowsFormsApp1.csproj|C:\\Users\\Kauter.M\\OneDrive - MiRO Mineraloelraffinerie Oberrhein GmbH \u0026 Co. KG\\Dokumente\\Simulator_Rechnerarchitekturen\\PIC16F84_Simulator\\WindowsFormsApp1\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{B6C941B3-2790-40BF-87DF-7D640DCB5311}|WindowsFormsApp1.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
@@ -11,11 +15,7 @@
       "RelativeMoniker": "D:0:0:{B6C941B3-2790-40BF-87DF-7D640DCB5311}|WindowsFormsApp1.csproj|solutionrelative:guifunctions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B6C941B3-2790-40BF-87DF-7D640DCB5311}|WindowsFormsApp1.csproj|c:\\users\\kauter.m\\onedrive - miro mineraloelraffinerie oberrhein gmbh \u0026 co. kg\\dokumente\\simulator_rechnerarchitekturen\\pic16f84_simulator\\windowsformsapp1\\registerfile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B6C941B3-2790-40BF-87DF-7D640DCB5311}|WindowsFormsApp1.csproj|solutionrelative:registerfile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B6C941B3-2790-40BF-87DF-7D640DCB5311}|WindowsFormsApp1.csproj|c:\\users\\kauter.m\\onedrive - miro mineraloelraffinerie oberrhein gmbh \u0026 co. kg\\dokumente\\simulator_rechnerarchitekturen\\pic16f84_simulator\\windowsformsapp1\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B6C941B3-2790-40BF-87DF-7D640DCB5311}|WindowsFormsApp1.csproj|C:\\Users\\Kauter.M\\OneDrive - MiRO Mineraloelraffinerie Oberrhein GmbH \u0026 Co. KG\\Dokumente\\Simulator_Rechnerarchitekturen\\PIC16F84_Simulator\\WindowsFormsApp1\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B6C941B3-2790-40BF-87DF-7D640DCB5311}|WindowsFormsApp1.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -26,24 +26,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "RegisterFile.cs",
               "DocumentMoniker": "C:\\Users\\Kauter.M\\OneDrive - MiRO Mineraloelraffinerie Oberrhein GmbH \u0026 Co. KG\\Dokumente\\Simulator_Rechnerarchitekturen\\PIC16F84_Simulator\\WindowsFormsApp1\\RegisterFile.cs",
               "RelativeDocumentMoniker": "RegisterFile.cs",
-              "ToolTip": "C:\\Users\\Kauter.M\\OneDrive - MiRO Mineraloelraffinerie Oberrhein GmbH \u0026 Co. KG\\Dokumente\\Simulator_Rechnerarchitekturen\\PIC16F84_Simulator\\WindowsFormsApp1\\RegisterFile.cs*",
-              "RelativeToolTip": "RegisterFile.cs*",
-              "ViewState": "AgIAABAAAAAAAAAAAAAYwDQAAAAAAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\Kauter.M\\OneDrive - MiRO Mineraloelraffinerie Oberrhein GmbH \u0026 Co. KG\\Dokumente\\Simulator_Rechnerarchitekturen\\PIC16F84_Simulator\\WindowsFormsApp1\\RegisterFile.cs",
+              "RelativeToolTip": "RegisterFile.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-07T13:50:38.678Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "GUIFunctions.cs",
               "DocumentMoniker": "C:\\Users\\Kauter.M\\OneDrive - MiRO Mineraloelraffinerie Oberrhein GmbH \u0026 Co. KG\\Dokumente\\Simulator_Rechnerarchitekturen\\PIC16F84_Simulator\\WindowsFormsApp1\\GUIFunctions.cs",
               "RelativeDocumentMoniker": "GUIFunctions.cs",
@@ -51,20 +51,18 @@
               "RelativeToolTip": "GUIFunctions.cs",
               "ViewState": "AgIAAFkAAAAAAAAAAAAAAG0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-02T12:30:40.211Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-02T12:30:40.211Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Form1.cs [Entwurf]",
               "DocumentMoniker": "C:\\Users\\Kauter.M\\OneDrive - MiRO Mineraloelraffinerie Oberrhein GmbH \u0026 Co. KG\\Dokumente\\Simulator_Rechnerarchitekturen\\PIC16F84_Simulator\\WindowsFormsApp1\\Form1.cs",
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "C:\\Users\\Kauter.M\\OneDrive - MiRO Mineraloelraffinerie Oberrhein GmbH \u0026 Co. KG\\Dokumente\\Simulator_Rechnerarchitekturen\\PIC16F84_Simulator\\WindowsFormsApp1\\Form1.cs [Entwurf]",
               "RelativeToolTip": "Form1.cs [Entwurf]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-02T09:55:52.078Z",
-              "EditorCaption": " [Entwurf]"
+              "WhenOpened": "2026-04-02T09:55:52.078Z"
             },
             {
               "$type": "Document",
@@ -76,8 +74,7 @@
               "RelativeToolTip": "Form1.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-02T09:53:14.009Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-02T09:53:14.009Z"
             }
           ]
         }
