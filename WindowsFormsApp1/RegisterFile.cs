@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*************************************************/
+// DIESE KLASSE DIENT ZUM VERWALTEN DER SFRs, DER GPRs, DER BANKEN UND DER SPIEGELADRESSEN
+/*************************************************/
+
 namespace WindowsFormsApp1
 {
 
@@ -47,6 +51,8 @@ namespace WindowsFormsApp1
 
         public void ResetPowerOn()
         {
+            // Dient zum löschen des Array Inhalts; Wird auch verwendet für einen definierten Zustand
+            // Array.Clear(array, startindex, ab dem gelöscht werden soll, anzahl der zu löschenden Elemente)
             Array.Clear(_sfr, 0, _sfr.Length);
             Array.Clear(_gpr, 0, _gpr.Length);
 

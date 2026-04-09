@@ -14,7 +14,7 @@ using WindowsFormsApp1.Properties;
 
 namespace WindowsFormsApp1
 {
-    // Form1 erbt von der Klasse Form, die die grundlegende Funktionalität für ein WinForm bereitstellt.
+    // FORM1 "partial" bedeutet dass die Klasse auf mehrere Dateien aufgeteilt ist
     // Die Klasse Form1 enthält die Logik und die Benutzeroberfläche für die Anwendung.
     public partial class Form1 : Form
     {
@@ -30,6 +30,8 @@ namespace WindowsFormsApp1
 
         //Objekte bzw. Labels für STATUS_REGISTER
         private Label[] STATUSREGISTERLabels = new Label[8];
+
+        private CPU cpu = new CPU();
 
         //Objekte bzw. Labels für SPECIAL_REGISTER
         private Label[] SpecialRegisterLabels = new Label[9];
@@ -71,6 +73,11 @@ namespace WindowsFormsApp1
                         dataGridView1.DataSource = programmBefehle;
 
                         programmZaehler = 0;
+                        cpu.Reset();
+                        cpu.PC = 0;
+                        programmZaehler = 0;
+                        UpdateGuiFromCpu();
+                        MarkiereAktuelleZeile();
                         portB = 0;
                         AktualisierePortBAnzeige();
                         MarkiereAktuelleZeile();
@@ -113,26 +120,30 @@ namespace WindowsFormsApp1
         {
             if (programmBefehle == null || programmBefehle.Count == 0) return;
 
+            // ProgrammCounter aus Klasse Cpu verwenden
             int idx = programmBefehle.FindIndex(e => e.Adresse == programmZaehler);
             if (idx < 0)
             {
-                // PC zeigt auf keine Zeile -> anhalten
+                // Wenn der PC auf keine Adresse zeigt, dann anhalten
                 StopRun();
                 return;
             }
 
             var instr = programmBefehle[idx];
+            ushort ir = instr.OpcodeWord; //  Das ist der Fetch Zyklus: Das Instruktionswort wird aus der LST-Datei geholt (hier simuliert) und in das Instruction Register (IR) geladen.
 
-            // --- TODO: echte PIC16F84 Instruction Execution anhand instr.Opcode ---
-            // DEMO: PortB hochzählen, damit du die Bits "leben" siehst
-            portB++;
+            cpu.Step(ir);
+            programmZaehler = cpu.PC;
+           
 
             // nächste Adresse (wenn LST-Wortadressen fortlaufend sind)
-            programmZaehler = instr.Adresse + 1;
+            programmZaehler = cpu.PC;
 
-            AktualisierePortBAnzeige();
+            UpdateGuiFromCpu();
             MarkiereAktuelleZeile();
         }
+
+
 
         private void StartRun()
         {
@@ -196,12 +207,14 @@ namespace WindowsFormsApp1
                 {
                     int adresse = Convert.ToInt32(match.Groups[1].Value, 16); //Adresse wird von Hex in int konvertiert
                     string opcode = match.Groups[2].Value.ToUpper();
+                    ushort opcodeWord = Convert.ToUInt16(opcode, 16);
                     string assemblerText = match.Groups[3].Value.Trim();
 
                     liste.Add(new LstEintrag
                     {
                         Adresse = adresse,
                         Opcode = opcode,
+                        OpcodeWord = opcodeWord,
                         AssemblerText = assemblerText
                     });
                 }
@@ -259,6 +272,35 @@ namespace WindowsFormsApp1
 
         }
 
+        private void UpdateGuiFromCpu()
+        {
+            SpecialRegisterLabels[0].Text = cpu.W.ToString("X2");
+
+            SpecialRegisterLabels[1].Text = cpu.Regs.ReadAbs(RegisterFile.FSR).ToString("X2");
+            SpecialRegisterLabels[2].Text = cpu.Regs.ReadAbs(RegisterFile.PCLATH).ToString("X2");
+            SpecialRegisterLabels[3].Text = cpu.Regs.ReadAbs(RegisterFile.PCL).ToString("X2");
+            SpecialRegisterLabels[4].Text = cpu.Regs.ReadAbs(RegisterFile.STATUS).ToString("X2");
+            SpecialRegisterLabels[5].Text = cpu.Regs.ReadAbs(RegisterFile.TMR0).ToString("X2");
+            SpecialRegisterLabels[6].Text = cpu.Regs.ReadAbs(RegisterFile.OPTION_REG).ToString("X2");
+
+            byte porta = cpu.Regs.ReadAbs(RegisterFile.PORTA);
+            byte portb = cpu.Regs.ReadAbs(RegisterFile.PORTB);
+
+            for(int bit = 0; bit < 8; bit++ )
+            {
+                portALabels[bit].Text = ((porta >> bit) & 1).ToString();
+                portBLabels[bit].Text = ((portb >> bit) & 1).ToString();
+            }
+
+            byte status = cpu.Regs.ReadAbs(RegisterFile.STATUS);
+            for(int i = 0; i<8; i++)
+            {
+                int bitIndex = 7 - i; //Status Labels sind in der Reihenfolge: IRP, RP1, RP0, TO, PD, Z, DC, C, das entspricht Bits 7 bis 0
+                STATUSREGISTERLabels[i].Text = ((status >> bitIndex) & 1).ToString();
+            }
+
+        }
+
         /**************************************************************/
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -277,6 +319,7 @@ namespace WindowsFormsApp1
     {
         public int Adresse { get; set; }
         public string Opcode { get; set; }
+        public ushort OpcodeWord { get; set; }
         public string AssemblerText { get; set; }
 
         public string Programcounter => Adresse.ToString("X4");

@@ -6,11 +6,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+/*************************************************/
+// BAUT DIE ANZEIGE WAS ANGEZEIGT WIRD
+/*************************************************/
+
 namespace WindowsFormsApp1
 {
     public static class GUIFunctions
     {
         // PORTA Initialisierung und Beschriftung
+        // Von statischen Klassen kann kein Objekt erzeugt werden
         public static void CreatePortAHorizontal(GroupBox PORTA, Label[] portALabels)
         {
             int startX = 10;
