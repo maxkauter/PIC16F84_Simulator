@@ -45,9 +45,9 @@ namespace WindowsFormsApp1
         private bool isRunning = false;
         private System.Windows.Forms.Timer runTimer;
 
-        private byte portB = 0x00;
-        private byte portA = 0x00;
-        private byte status = 0x00;
+        // private byte portB = 0x00;
+        // private byte portA = 0x00;
+        // private byte status = 0x00;
 
         /**************************************************/
         public Form1()
@@ -72,15 +72,15 @@ namespace WindowsFormsApp1
                         programmBefehle = LstDateiEinlesen(dateipfad);
                         dataGridView1.DataSource = programmBefehle;
 
-                        programmZaehler = 0;
                         cpu.Reset();
                         cpu.PC = 0;
                         programmZaehler = 0;
+
                         UpdateGuiFromCpu();
                         MarkiereAktuelleZeile();
-                        portB = 0;
+                        //portB = 0;
                         AktualisierePortBAnzeige();
-                        MarkiereAktuelleZeile();
+                        AktualisierePortAAnzeige();
                     }
                     catch (Exception ex)
                     {
@@ -90,16 +90,29 @@ namespace WindowsFormsApp1
             }
         }
 
-        //NOCH UNNÖTIG, ABER HIER WIRD PORTB ANGEZEIGt
-        private void AktualisierePortBAnzeige()
+        
+        private void AktualisierePortAAnzeige()
         {
+            byte portAValue = cpu.Regs.ReadAbs(RegisterFile.PORTA);
+
             for (int bit = 0; bit < 8; bit++)
             {
-                int value = (portB >> bit) & 1;
+                int value = (portAValue >> bit) & 1;
+                portALabels[bit].Text = value.ToString();
+            }
+        }
+
+        private void AktualisierePortBAnzeige()
+        {
+            // byte portBValue = cpu.Regs.ReadAbs(RegisterFile.PORTB);
+
+            for (int bit = 0; bit < 8; bit++)
+            {
+                byte portBValue = cpu.Regs.ReadAbs(RegisterFile.PORTB);
+                int value = (portBValue >> bit) & 1;
                 portBLabels[bit].Text = value.ToString(); 
             }
         }
-        
 
         private void MarkiereAktuelleZeile()
         {
@@ -120,6 +133,8 @@ namespace WindowsFormsApp1
         {
             if (programmBefehle == null || programmBefehle.Count == 0) return;
 
+            programmZaehler = cpu.PC;
+
             // ProgrammCounter aus Klasse Cpu verwenden
             int idx = programmBefehle.FindIndex(e => e.Adresse == programmZaehler);
             if (idx < 0)
@@ -133,8 +148,6 @@ namespace WindowsFormsApp1
             ushort ir = instr.OpcodeWord; //  Das ist der Fetch Zyklus: Das Instruktionswort wird aus der LST-Datei geholt (hier simuliert) und in das Instruction Register (IR) geladen.
 
             cpu.Step(ir);
-            programmZaehler = cpu.PC;
-           
 
             // nächste Adresse (wenn LST-Wortadressen fortlaufend sind)
             programmZaehler = cpu.PC;
@@ -180,7 +193,7 @@ namespace WindowsFormsApp1
             StepOnce();
         }
 
-
+        // HIER WIRD DIE LST-DATEI EINGELESEN UND IN DIE LISTE "programmBefehle" GESPEICHERT, DIE DANN IM DataGridView ANGEZEIGT WIRD
         private List<LstEintrag> LstDateiEinlesen(string dateipfad)
         {
             //Leere Liste wird erstellt, um die Einträge der LST-Datei zu speichern
@@ -219,7 +232,7 @@ namespace WindowsFormsApp1
                     });
                 }
             }
-
+           
             return liste;
         }
 
@@ -255,6 +268,7 @@ namespace WindowsFormsApp1
 
             GUIFunctions.CreatePortAHorizontal(PORTA, portALabels);
             GUIFunctions.CreatePortBHorizontal(PORTB, portBLabels);
+            
             //Hier wird das Status Register aufgerufen und definiert
             GUIFunctions.CreateStatusRegisterHorizontal(STATUS_REGISTER, STATUSREGISTERLabels);
             //Special Function Register
@@ -282,6 +296,11 @@ namespace WindowsFormsApp1
             SpecialRegisterLabels[4].Text = cpu.Regs.ReadAbs(RegisterFile.STATUS).ToString("X2");
             SpecialRegisterLabels[5].Text = cpu.Regs.ReadAbs(RegisterFile.TMR0).ToString("X2");
             SpecialRegisterLabels[6].Text = cpu.Regs.ReadAbs(RegisterFile.OPTION_REG).ToString("X2");
+            
+            
+
+            AktualisierePortAAnzeige();
+            AktualisierePortBAnzeige();
 
             byte porta = cpu.Regs.ReadAbs(RegisterFile.PORTA);
             byte portb = cpu.Regs.ReadAbs(RegisterFile.PORTB);
@@ -314,7 +333,7 @@ namespace WindowsFormsApp1
         }
     }
 
-    // Datenklasse
+    // Datenklasse für die Listeneinträge
     public class LstEintrag
     {
         public int Adresse { get; set; }
@@ -326,16 +345,6 @@ namespace WindowsFormsApp1
 
         public string Program => $"{Opcode}   {AssemblerText}";
     }
-
-    // KLEINES BEISPIEL:
-    /*  var e = new LstEintrag();
-        e.Adresse = 10;                // set wird ausgeführt
-        e.Opcode = "3001";             // set wird ausgeführt
-        e.AssemblerText = "MOVLW 0x01"; // set wird ausgeführt
-
-        Console.WriteLine(e.Programcounter); // get berechnet: "000A"
-        Console.WriteLine(e.Program);        // get berechnet: "3001   MOVLW 0x01"
-    */
 }
 
     

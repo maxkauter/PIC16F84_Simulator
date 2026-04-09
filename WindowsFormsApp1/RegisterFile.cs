@@ -58,7 +58,7 @@ namespace WindowsFormsApp1
 
             // Definierter/Initialer Zustand STATUS Register = TO = 1, PD = 1, RP0 = 0 (Bank 0), RP1 = 0 (Bank 0)
             //Aus Datenblatt PIC16F8X
-            _sfr[STATUS] = 0b00110000; //Dadurch wird dieser erreicht
+            _sfr[STATUS] = 0b00011000; //Dadurch wird dieser erreicht
             _sfr[OPTION_REG] = 0b11111111;
             _sfr[TRISA] = 0b00011111;
             _sfr[TRISB] = 0b11111111;

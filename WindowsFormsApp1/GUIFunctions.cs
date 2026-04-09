@@ -20,7 +20,7 @@ namespace WindowsFormsApp1
         {
             int startX = 10;
             int startY = 20;
-            int spacing = 40;
+            int spacing = 34;
 
             for (int i = 7; i >= 0; i--)
             {
@@ -59,7 +59,7 @@ namespace WindowsFormsApp1
         {
             int startX = 10;
             int startY = 20;
-            int spacing = 40;
+            int spacing = 34;
 
             for (int i = 7; i >= 0; i--)
             {
@@ -90,7 +90,7 @@ namespace WindowsFormsApp1
         {
             int startX = 10;
             int startY = 20;
-            int spacing = 40;
+            int spacing = 35;
 
             string[] names = { "IRP", "RP1", "RP0", "TO", "PD", "Z", "DC", "C" };
 
@@ -117,7 +117,7 @@ namespace WindowsFormsApp1
         {
             int startX = 10;
             int startY = 25;
-            int spacingY = 25;
+            int spacingY = 21;
             string[] names = { "W", "FSR", "PCLATH", "PCL", "STATUS", "TIMER 0", "Option", "FSR", "Prescaler" };
             Label[] valueLabels = new Label[names.Length];
 
@@ -130,7 +130,7 @@ namespace WindowsFormsApp1
 
                 Label lblValue = new Label();
                 lblValue.Text = "X";
-                lblValue.Location = new Point(startX + 120, startY + i * spacingY);
+                lblValue.Location = new Point(startX + 100, startY + i * spacingY);
                 lblValue.AutoSize = true;
 
                 SPECIALREGISTERLabels[i] = lblValue;
