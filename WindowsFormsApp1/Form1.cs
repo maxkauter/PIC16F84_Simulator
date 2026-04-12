@@ -41,13 +41,10 @@ namespace WindowsFormsApp1
         private int aktuellerBefehlIndex = 0;
         private int programmZaehler = 0;
 
-        // --- Run/Stop Steuerung ---
+        // Wird für Go und Stop benötigt, damit der Timer weiß, ob er weiterlaufen soll oder nicht
         private bool isRunning = false;
         private System.Windows.Forms.Timer runTimer;
 
-        // private byte portB = 0x00;
-        // private byte portA = 0x00;
-        // private byte status = 0x00;
 
         /**************************************************/
         public Form1()

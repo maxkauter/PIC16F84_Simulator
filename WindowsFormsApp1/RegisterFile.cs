@@ -79,7 +79,7 @@ namespace WindowsFormsApp1
         {
             // Schauen, ob es sich um indirekte Adressierung handelt
             if ((f & 0x7F) == INDF)
-                return ReadIndirect();
+                return ReadIndirect(); // Wenn ja dann wird ReadIndirect aufgerufen, sonst direkte Adresse aufgelöst
 
             byte addr = ResolveDirectAddress(f);
             return ReadAbs(addr);
@@ -98,7 +98,7 @@ namespace WindowsFormsApp1
             WriteAbs(addr, value);              // Hier wird dann die absolute Adresse geschrieben, die bereits die Bank berücksichtigt
         }
 
-        // -------- Absolute read/write (already banked address 0x00..0xFF) --------
+        // Hier wird die absolute Adresse gelesen, die bereits die Bank berücksichtigt, also zwischen 0x00 und 0xFF
         public byte ReadAbs(byte addr) // Hier wird eine absolute Adresse angespprochen die bereits die Bank berücksichtigt (Zwischen 0x00 und 0xFF)
         {
             addr = ResolveMirrors(addr); // 
@@ -156,7 +156,7 @@ namespace WindowsFormsApp1
         // Hier noch Hilfsfunktionen, die bspw. schauen welche Bank aktiv ist bzw. aktiv sein soll
         private byte ResolveDirectAddress(byte f)
         {
-            // f is 7-bit in the instruction
+            // f ist 7-bit in der direkten Adressierung, Bank wird über RP0 gesteuert
             byte bank = (byte)(RP0 ? 0x80 : 0x00); // Wenn RP0 gesetzt ist (RP0==true) dann 0x80 bzw. Bank 1, sonst 0x00 bzw.Bank0
             byte addr = (byte)(bank | (f & 0x7F)); // Bit 0-6 werden maskiert (Weil Bank von 0-127 geht und nicht bis 256)
             return ResolveMirrors(addr);

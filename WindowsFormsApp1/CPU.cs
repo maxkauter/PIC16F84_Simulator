@@ -22,7 +22,7 @@ namespace WindowsFormsApp1
         // CPU zurücksetzen bzw. in definierten Zustand vor der Ausfürhung
         public void Reset()
         {
-            Regs.ResetPowerOn(); // Darüber werden alle Register zurückgesetzt
+            Regs.ResetPowerOn(); // Darüber werden alle Register zurückgesetzt (Liegt in der RegiserFile Klasse)
             PC = 0;
             W = 0;
         }
