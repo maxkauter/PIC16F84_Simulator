@@ -19,6 +19,7 @@ namespace WindowsFormsApp1
         // W-Register (Lesen und schreiben erlaubt durch get und set)
         public byte W { get; set; } = 0;
 
+        // Hier wollen wir den Stack und den SP resetten ebenfalls
         // CPU zurücksetzen bzw. in definierten Zustand vor der Ausfürhung
         public void Reset()
         {
@@ -33,10 +34,12 @@ namespace WindowsFormsApp1
             //Maskieren der unteren 14 Bit und Typumwandlung in ushort (0x3FFF == 0011 1111 1111 1111)
             ir = (ushort)(ir & 0x3FFF);
 
+            // MOVLW
             // Zuerst maskieren der Bits "X" 00XX XXXX 0000 0000
             // Nach der Maskierung wird geschaut ob maske == 0x3000 also ob Bit 13 und 14 = 1 sind, denn ist es ein movlw befehl
             if((ir & 0x3F00) == 0x3000)
             {
+                // MOVLW
                 // Hier überpfüen wir um welche Instruktion es sich handelt, ein movlw Befehl hat das Muster 1100 xxxx xxxx
                 // Das Literal also dass was in das W-Register muss sind lediglich die bits 0-7, weshalb wir k mit 0x00FF maskeiren
                 byte k = (byte)(ir & 0x00FF);
@@ -44,7 +47,7 @@ namespace WindowsFormsApp1
                 PC++;
                 return;
             }
-
+            // MOVWF
             // Maskieren der Bits "X" 00XX XXXX X000 0000
             // Dannach anschließend == 0000 0000 1000 0000, dann movwf Befehl da dort Bit 7 = 1
             if ((ir & 0x3F80) == 0x0080)
@@ -55,6 +58,7 @@ namespace WindowsFormsApp1
                 PC++;
                 return;
             }
+
             // Nach jedem Schritt wird der Programmcounter erhöht, wodurch der nächste Befehl ausgeführt wird
             PC++;
         }
